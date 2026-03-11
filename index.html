@@ -1,31 +1,150 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Dynamic Date Display</title>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Note Editor</title>
+
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.png">
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background:#f4f4f4;
+}
+
+.toolbar{
+display:flex;
+align-items:center;
+gap:10px;
+padding:10px;
+background:white;
+border-bottom:1px solid #ccc;
+position:sticky;
+top:0;
+z-index:100;
+}
+
+.toolbar button{
+padding:6px 12px;
+border:1px solid #ccc;
+background:white;
+cursor:pointer;
+border-radius:6px;
+font-size:14px;
+}
+
+.toolbar button:hover{
+background:#f0f0f0;
+}
+
+#docName{
+font-size:22px;
+font-weight:bold;
+padding:15px;
+outline:none;
+background:white;
+border-bottom:1px solid #ddd;
+}
+
+#editor{
+padding:20px;
+min-height:70vh;
+outline:none;
+background:white;
+line-height:1.5;
+}
+
+</style>
+
 </head>
+
 <body>
 
-    <h2>Current Date and Time:</h2>
-    <!-- This div will display the date and time -->
-    <div id="date-time-display"></div>
+<div class="toolbar">
 
-    <script>
-        // Function to get the current date and time and display it
-        function updateDateTime() {
-            const displayElement = document.getElementById('date-time-display');
-            const currentDate = new Date();
+<button onclick="newDoc()">New</button>
 
-            // Format the date and time string (you can customize the format)
-            const dateString = currentDate.toLocaleString(); 
-            
-            // Update the content of the div
-            displayElement.textContent = dateString;
-        }
+<button onclick="saveDoc()">Save</button>
 
-        // Call the function immediately upon page load
-        updateDateTime();
+<label>
+<button>Open</button>
+<input type="file" id="fileInput" hidden>
+</label>
 
-        // Update the date and time every 1 seconds (1000 milliseconds)
-        setInterval(updateDateTime, 1000);  
-    
+<button onclick="format('bold')"><b>B</b></button>
+
+<button onclick="format('italic')"><i>I</i></button>
+
+<button onclick="format('underline')"><u>U</u></button>
+
+</div>
+
+<div id="docName" contenteditable="true">
+Untitled Document
+</div>
+
+<div id="editor" contenteditable="true">
+Start typing your notes here...
+</div>
+
+<script>
+
+function format(command){
+document.execCommand(command,false,null);
+}
+
+function newDoc(){
+
+document.getElementById("editor").innerHTML="";
+document.getElementById("docName").innerText="Untitled Document";
+
+}
+
+function saveDoc(){
+
+let text=document.getElementById("editor").innerText;
+
+let name=document.getElementById("docName").innerText || "document";
+
+let blob=new Blob([text],{type:"text/plain"});
+
+let link=document.createElement("a");
+
+link.href=URL.createObjectURL(blob);
+
+link.download=name + ".txt";
+
+link.click();
+
+}
+
+document.getElementById("fileInput").addEventListener("change",function(){
+
+let file=this.files[0];
+
+if(!file) return;
+
+let reader=new FileReader();
+
+reader.onload=function(e){
+
+document.getElementById("editor").innerText=e.target.result;
+
+}
+
+reader.readAsText(file);
+
+});
+
+</script>
+
+</body>
+</html>
         
