@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Dynamic Date Display</title>
@@ -26,46 +26,6 @@
         updateDateTime();
 
         // Update the date and time every 1 seconds (1000 milliseconds)
-        setInterval(updateDateTime, 1000); 
-    </script>
-
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notepad</title>
-    <style>
-        /* Basic CSS styling */
-        body { font-family: sans-serif; margin: 20px; }
-        textarea { width: 100%; height: 400px; padding: 10px; box-sizing: border-box; }
-        button { margin-top: 10px; }
-    </style>
-</head>
-<body>
-    <h1> Notepad</h1>
-    <textarea id="notepad" placeholder="Write your notes here..."></textarea>
-    <button onclick="saveNote()">Save Note</button>
-    <script>
-        // JavaScript for functionality
-        const notepad = document.getElementById('notepad');
-
-        // Load saved note on page load
-        window.onload = function() {
-            const savedNote = localStorage.getItem('userNote');
-            if (savedNote) {
-                notepad.value = savedNote;
-            }
-        };
-
-        // Save note to local storage
-        function saveNote() {
-            localStorage.setItem('userNote', notepad.value);
-            alert('Note saved!');
-        }
-    </script>
-</body>
-</html>
+        setInterval(updateDateTime, 1000);  
+    
+        
